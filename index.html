@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Extrator de Dados</title>
+
+    <!-- Vue e Vuetify via CDN -->
+    <script src="https://unpkg.com/vue@3.4.21/dist/vue.global.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.5.15/dist/vuetify.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.5.15/dist/vuetify.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- CropperJS -->
+    <link href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
+
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    </script>
+
+    <!-- Tiff.js -->
+    <script src="https://cdn.jsdelivr.net/npm/tiff.js@1.0.0/tiff.min.js"></script>
+    <style>
+        #app {
+            padding: 20px;
+        }
+
+        .img-preview {
+            max-width: 100%;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 250px;
+        }
+
+        .v-container {
+  /* Substitua "1200px" pela largura máxima desejada */
+  max-width: 960px !important;
+}
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <component :is="tela" :imagem="imagem" :texto="textoOCR" :dados="dadosExtraidos" @trocar-tela="trocarTela"
+                @set-imagem="setImagem" @set-texto="setTexto" @set-dados="setDados" />
+        </v-app>
+    </div>
+
+    <script type="module" src="./js/index.js"></script>
+</body>
+
+</html>
