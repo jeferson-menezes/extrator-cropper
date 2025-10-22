@@ -2,56 +2,56 @@ export default {
   props: ['imagem'],
   emits: ['trocarTela', 'setImagem'],
   template: `
-  <v-container max-width="1200px">
-    <h3>Recortar Imagem</h3>
-
-    <!-- Área principal do Cropper -->
-    <div 
-      ref="cropContainer"
-      style="width:100%; height:75vh; max-height:75vh; overflow:hidden; border:1px solid #ccc; display:flex; align-items:center; justify-content:center;"
-    >
-      <img ref="img" :src="imagem" alt="crop" style="max-width:100%; max-height:100%; object-fit:contain;" />
-    </div>
-
-    <!-- Controle de zoom -->
-    <v-row class="mt-4" justify="center" align="center">
-      <v-col cols="8" md="6">
-        <v-slider
-          v-model="zoomLevel"
-          min="0.1"
-          max="3"
-          step="0.05"
-          label="Zoom"
-          @update:model-value="atualizarZoom"
-        ></v-slider>
-      </v-col>
+<v-container>
+    <v-row justify="justify-end" class="my-4">
+        <v-btn color="red-lighten-1" prepend-icon="mdi-arrow-left" @click="$emit('trocarTela', 'SelectAction')">
+            Voltar
+        </v-btn>
     </v-row>
 
-    <!-- Botões -->
-    <v-row class="mt-2" justify="center" align="center" gap="8">
-      <v-btn color="primary" size="large" @click="visualizarCorte">Visualizar Corte</v-btn>
-      <v-btn variant="text" size="large" class="ml-2" @click="$emit('trocarTela', 'UploadVue')">Voltar</v-btn>
-    </v-row>
-
-    <!-- Dialog de pré-visualização -->
-    <v-dialog v-model="dialog" width="1000" height="95vh">
-      <v-card>
-        <v-toolbar color="primary" dark>
-          <v-toolbar-title>Pré-visualização do Corte</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
-        </v-toolbar>
+    <v-card border class="relative">
+        <v-toolbar color="primary" title="Recortar Imagem"></v-toolbar>
         <v-card-text class="text-center">
-          <v-img :src="preview" max-height="500" contain class="mx-auto my-4"></v-img>
+            <div ref="cropContainer"
+                style="width:100%; height:75vh; max-height:75vh; overflow:hidden; border:1px solid #ccc; display:flex; align-items:center; justify-content:center;">
+                <img ref="img" :src="imagem" alt="crop" style="max-width:100%; max-height:100%; object-fit:contain;" />
+            </div>
+
+            <v-row class="mt-1" justify="center" align="center">
+                <v-col cols="8" md="6">
+                    <v-slider v-model="zoomLevel" append-icon="mdi-magnify-plus-outline"
+                        prepend-icon="mdi-magnify-minus-outline" min="0.1" max="3" step="0.05"
+                        @update:model-value="atualizarZoom"></v-slider>
+                </v-col>
+            </v-row>
+
         </v-card-text>
-        <v-card-actions class="justify-center">
-          <v-btn color="success" size="large" @click="aplicarCorte">Aplicar Corte</v-btn>
-          <v-btn variant="text" size="large" @click="dialog = false">Cancelar</v-btn>
+
+        <v-card-actions>
+            <v-row justify="center" align="center">
+                <v-btn prepend-icon="mdi-magnify-expand" color="primary" size="large" @click="visualizarCorte"
+                    variant="tonal">Visualizar Corte</v-btn>
+            </v-row>
         </v-card-actions>
-      </v-card>
+    </v-card>
+
+    <v-dialog v-model="dialog" width="1000" height="95vh">
+        <v-card>
+            <v-toolbar color="primary" dark>
+                <v-toolbar-title>Pré-visualização do Corte</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn icon @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
+            </v-toolbar>
+            <v-card-text class="text-center">
+                <v-img :src="preview" max-height="500" contain class="mx-auto my-4"></v-img>
+            </v-card-text>
+            <v-card-actions class="justify-center">
+                <v-btn prepend-icon="mdi-scissors-cutting" color="success" size="large" @click="aplicarCorte">Aplicar Corte</v-btn>
+            </v-card-actions>
+        </v-card>
     </v-dialog>
 
-  </v-container>
+</v-container>
   `,
   data() {
     return {
@@ -77,6 +77,7 @@ export default {
           zoomable: true,
           movable: true,
           scalable: true,
+          dragMode: 'move',
           ready: () => {
             this.$nextTick(() => this.ajustarZoomInicial(container, img));
           }
@@ -85,7 +86,9 @@ export default {
     });
   },
   methods: {
+
     ajustarZoomInicial(container, img) {
+
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
       const imageWidth = img.naturalWidth;
@@ -96,7 +99,7 @@ export default {
       const scaleY = containerHeight / imageHeight;
       const scale = Math.min(scaleX, scaleY);
 
-      // aplica o zoom inicial (fit-to-screen)
+      // aplica o zoom inicial ajustar à tela (fit-to-screen)
       this.cropper.zoomTo(scale);
       this.zoomLevel = scale;
       this.initialZoom = scale;
@@ -122,7 +125,7 @@ export default {
     aplicarCorte() {
       this.$emit('set-imagem', this.preview);
       this.dialog = false;
-      this.$emit('trocarTela', 'UploadVue');
+      this.$emit('trocarTela', 'SelectAction');
     }
   }
 };

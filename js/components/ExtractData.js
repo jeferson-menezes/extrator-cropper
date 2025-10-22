@@ -2,12 +2,21 @@ export default {
         props: ['dados'],
         emits: ['trocarTela'],
         template: `
- <v-container>
-    <v-card>
-        <v-toolbar color="primary" title="User Profile"></v-toolbar>
+        <v-container>
+
+    <v-row justify="justify-end" class="my-4">
+        <v-btn color="red-lighten-1" prepend-icon="mdi-arrow-left" @click="$emit('trocarTela', 'SelectAction')">
+            Voltar
+        </v-btn>
+    </v-row>
+
+    <v-card border>
+        <v-toolbar color="primary" title="Campos estruturas"></v-toolbar>
 
         <div class="d-flex flex-row">
+
             <!-- TABS LATERAIS -->
+
             <v-tabs v-model="tab" color="primary" direction="vertical">
                 <v-tab prepend-icon="mdi-account" value="option-1">Cartório</v-tab>
                 <v-tab prepend-icon="mdi-lock" value="option-2">Registro</v-tab>
@@ -17,6 +26,7 @@ export default {
             </v-tabs>
 
             <!-- CONTEÚDO DAS ABAS -->
+
             <v-window v-model="tab" class="flex-grow-1">
                 <v-window-item value="option-1">
                     <v-card flat>

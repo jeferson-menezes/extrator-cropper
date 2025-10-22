@@ -24,7 +24,7 @@
     </script>
 
     <!-- Tiff.js -->
-    <script src="https://cdn.jsdelivr.net/npm/tiff.js@1.0.0/tiff.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/utif@3.1.0/UTIF.js"></script>
     <style>
         #app {
             padding: 20px;
@@ -42,9 +42,28 @@
         }
 
         .v-container {
-  /* Substitua "1200px" pela largura máxima desejada */
-  max-width: 960px !important;
-}
+            /* Substitua "1200px" pela largura máxima desejada */
+            max-width: 1200px !important;
+        }
+
+        .inner-loading {
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            background: rgba(194, 193, 193, 0.75);
+            backdrop-filter: blur(2px);
+            border-radius: inherit;
+        }
+
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 0.2s ease;
+        }
+
+        .fade-enter-from,
+        .fade-leave-to {
+            opacity: 0;
+        }
     </style>
 </head>
 
