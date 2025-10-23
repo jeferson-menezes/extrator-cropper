@@ -1,5 +1,5 @@
-const { createApp, ref } = Vue;
-const { createVuetify } = Vuetify
+const { createApp, ref, computed, watch, onMounted } = Vue;
+const { createVuetify, useTheme } = Vuetify
 
 const components = Vuetify.components
 const directives = Vuetify.directives
@@ -24,6 +24,28 @@ const App = {
         const setTexto = (txt) => textoOCR.value = txt;
         const setDados = (dados) => dadosExtraidos.value = dados;
 
+        const theme = useTheme();
+
+        const darkMode = computed({
+            get: () => theme.global.current.value.dark,
+            set: (val) => {
+                theme.global.name.value = val ? 'dark' : 'light';
+            },
+        });
+
+        const toggleDarkMode = () => {
+            darkMode.value = !darkMode.value;
+        };
+
+        watch(darkMode, (val) => {
+            localStorage.setItem("darkMode", val ? "1" : "0");
+        });
+
+        onMounted(() => {
+            if (localStorage.getItem("darkMode") === "1") darkMode.value = true;
+        });
+
+
         return {
             tela,
             imagem,
@@ -32,7 +54,9 @@ const App = {
             trocarTela,
             setImagem,
             setTexto,
-            setDados
+            setDados,
+            darkMode, 
+            toggleDarkMode
         };
     },
 
@@ -41,7 +65,13 @@ const App = {
     el: "#app"
 }
 
-const vuetify = createVuetify({ components, directives });
+const vuetify = createVuetify({ 
+    theme:{
+        defaultTheme: 'light'
+    },
+    components, 
+    directives 
+});
 const app = createApp(App);
 app.use(vuetify);
 

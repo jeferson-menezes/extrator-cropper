@@ -70,6 +70,17 @@
 <body>
     <div id="app">
         <v-app>
+
+            <v-app-bar density="compact" flat color="blue-grey-darken-3" dark class="mb-4" fixed>
+                <v-toolbar-title>Extrator de Certidão</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <v-btn icon @click="toggleDarkMode">
+                    <v-icon>{{ darkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+                </v-btn>
+            </v-app-bar>
+
             <component :is="tela" :imagem="imagem" :texto="textoOCR" :dados="dadosExtraidos" @trocar-tela="trocarTela"
                 @set-imagem="setImagem" @set-texto="setTexto" @set-dados="setDados" />
         </v-app>

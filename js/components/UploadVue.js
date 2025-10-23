@@ -7,40 +7,18 @@ export default {
   emits: ["trocarTela"],
 
   template: `
-    <v-container class="fill-height d-flex align-center justify-center text-center">
-      <v-card
-        class="pa-10 d-flex flex-column align-center justify-center cursor-pointer"
-        elevation="4"
-        width="400"
-        height="300"
-        outlined
-        :class="{ 'drop-active': isDragging }"
-        @dragover.prevent="onDragOver"
-        @dragleave.prevent="onDragLeave"
-        @drop.prevent="onDrop"
-        @click="selectFile"
-      >
-      <inner-loading :active="loading" text="Processando arquivo..." />
+  <v-container class="fill-height d-flex align-center justify-center text-center">
+    <v-card class="pa-10 d-flex flex-column align-center justify-center cursor-pointer" elevation="4" width="400"
+        height="300" outlined :class="{ 'drop-active': isDragging }" @dragover.prevent="onDragOver"
+        @dragleave.prevent="onDragLeave" @drop.prevent="onDrop" @click="selectFile">
+        <inner-loading :active="loading" text="Processando arquivo..." />
         <v-icon size="100" color="green-accent-4" class="mb-4">mdi-image-sync</v-icon>
-        
 
-        <input
-          ref="fileInput"
-          type="file"
-          class="d-none"
-          accept="image/*,.tif,.tiff,.pdf"
-          @change="onFileChange"
-        />
+        <input ref="fileInput" type="file" class="d-none" accept="image/*,.tif,.tiff,.pdf" @change="onFileChange" />
 
-        <v-progress-circular
-          v-if="loading"
-          indeterminate
-          color="primary"
-          size="40"
-          class="mt-4"
-        />
-      </v-card>
-    </v-container>
+        <v-progress-circular v-if="loading" indeterminate color="primary" size="40" class="mt-4" />
+    </v-card>
+</v-container>
   `,
 
   data() {

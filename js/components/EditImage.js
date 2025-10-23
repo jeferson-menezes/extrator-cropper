@@ -9,7 +9,7 @@ export default {
         </v-btn>
     </v-row>
 
-    <v-card border class="relative">
+    <v-card border class="relative pb-2">
         <v-toolbar color="primary" title="Recortar Imagem"></v-toolbar>
         <v-card-text class="text-center">
             <div ref="cropContainer"
@@ -24,7 +24,6 @@ export default {
                         @update:model-value="atualizarZoom"></v-slider>
                 </v-col>
             </v-row>
-
         </v-card-text>
 
         <v-card-actions>
@@ -36,7 +35,7 @@ export default {
     </v-card>
 
     <v-dialog v-model="dialog" width="1000" height="95vh">
-        <v-card>
+        <v-card class="pb-2">
             <v-toolbar color="primary" dark>
                 <v-toolbar-title>Pré-visualização do Corte</v-toolbar-title>
                 <v-spacer></v-spacer>

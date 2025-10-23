@@ -15,21 +15,21 @@ export default {
   template: `
 <v-container>
 
-    <v-row justify="justify-end" class="my-4">
+    <v-row justify="justify-end" class="my-4 relative">
         <v-btn color="red-lighten-1" prepend-icon="mdi-arrow-left" @click="$emit('trocarTela', 'UploadVue')">
             Voltar
         </v-btn>
+
+         <v-btn fixed bottom  style="top: 85px; right:-10px; z-index:1;" class="position-absolute" color="orange-darken-1" size="large" icon="mdi-box-cutter" location="top right"
+            @click="editarImagem">
+        </v-btn>
     </v-row>
 
-    <v-card border class="relative">
+    <v-card border class="relative pb-2">
     <inner-loading color='purple-darken-1' :active="loading" text="Processando arquivo..." />
         
-        <v-toolbar color="primary" title="Selecione uma Ação"></v-toolbar>
-        
-        <v-btn class="position-absolute" color="orange-darken-1" size="large" icon="mdi-box-cutter" location="bottom right"
-            @click="editarImagem" offset>
-        </v-btn> 
-
+        <v-toolbar color="cyan-lighten-1" title="Selecione uma Ação"></v-toolbar>
+               
         <v-card-text   class="text-center">
             <v-img v-if="imagem" :src="imagem" max-height="600px" contain class="mb-4"></v-img>
         </v-card-text>
