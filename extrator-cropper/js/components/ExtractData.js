@@ -18,11 +18,11 @@ export default {
             <!-- TABS LATERAIS -->
 
             <v-tabs v-model="tab" color="primary" direction="vertical">
-                <v-tab prepend-icon="mdi-home-city" value="option-1">Cartório</v-tab>
-                <v-tab prepend-icon="mdi-certificate" value="option-2">Registro</v-tab>
-                <v-tab prepend-icon="mdi-human-male-female-child" value="option-3">Declarante</v-tab>
-                <v-tab prepend-icon="mdi-account-child" value="option-4">Genitores</v-tab>
-                <v-tab prepend-icon="mdi-home-heart" value="option-5">Avós</v-tab>
+                <v-tab prepend-icon="mdi-account" value="option-1">Cartório</v-tab>
+                <v-tab prepend-icon="mdi-lock" value="option-2">Registro</v-tab>
+                <v-tab prepend-icon="mdi-lock" value="option-3">Declarante</v-tab>
+                <v-tab prepend-icon="mdi-access-point" value="option-4">Genitores</v-tab>
+                <v-tab prepend-icon="mdi-lock" value="option-5">Avós</v-tab>
             </v-tabs>
 
             <!-- CONTEÚDO DAS ABAS -->

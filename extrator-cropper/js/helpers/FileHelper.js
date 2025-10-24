@@ -35,18 +35,9 @@ export async function convertFileToImage(file, ext) {
 
                 // ===== PDF =====
                 if (ext === "pdf") {
-                    // await ensurePdfJsLoaded();
-
-                    // const pdf = await window.pdfjsLib.getDocument({ data: base64 }).promise;
-
                     await ensurePdfJsLoaded();
 
-                    // 🧩 CORREÇÃO: em vez de usar o base64 do FileReader,
-                    // leia o arquivo novamente como ArrayBuffer para o pdf.js
-                    const arrayBuffer = await file.arrayBuffer();
-                    const uint8Array = new Uint8Array(arrayBuffer);
-
-                    const pdf = await window.pdfjsLib.getDocument({ data: uint8Array }).promise;
+                    const pdf = await window.pdfjsLib.getDocument({ data: base64 }).promise;
                     const page = await pdf.getPage(1);
                     const viewport = page.getViewport({ scale: 1.5 });
                     const canvas = document.createElement("canvas");
@@ -57,6 +48,7 @@ export async function convertFileToImage(file, ext) {
 
                     return resolve(canvas.toDataURL("image/png"));
                 }
+
                 // ===== IMAGEM COMUM =====
                 resolve(base64);
 

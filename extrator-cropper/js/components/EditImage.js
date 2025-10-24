@@ -115,77 +115,8 @@ export default {
         maxWidth: 4096,
         maxHeight: 4096,
         imageSmoothingEnabled: true,
-        imageSmoothingQuality: 'high',
-        fillColor: '#fff',  // 🔹 fundo branco para evitar transparência
-        willReadFrequently: true  // 🔹 melhora performance no getImageData()
+        imageSmoothingQuality: 'high'
       });
-
-      // ⿢ Obter o contexto do canvas
-      const ctx = canvas.getContext('2d');
-      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imgData.data;
-
-      // ⿣ Ajustar contraste e aplicar limiar (binarização)
-      const contrast = 6.0;  // valores entre 1.2 e 2.0 funcionam bem
-      const brightness = -10;
-      // const threshold = 130; // faixa típica: 110–140 para impressoras matriciais
-
-      const avgGray = data.filter((_, i) => i % 4 === 0)
-        .reduce((a, b) => a + b, 0) / (canvas.width * canvas.height);
-      const threshold = avgGray * 0.9; // adaptativo
-
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-
-        // Converter para tons de cinza
-        const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-
-        // Aplicar contraste e brilho
-        const adjusted = Math.min(
-          255,
-          Math.max(0, (gray - 128) * contrast + 128 + brightness)
-        );
-
-        // Aplicar limiar (binarização)
-        const v = adjusted > threshold ? 255 : 0;
-
-        data[i] = data[i + 1] = data[i + 2] = v;
-      }
-
-
-      const kernelSize = 3;
-      for (let y = 1; y < canvas.height - 1; y++) {
-        for (let x = 1; x < canvas.width - 1; x++) {
-          let sum = 0;
-          for (let ky = -1; ky <= 1; ky++) {
-            for (let kx = -1; kx <= 1; kx++) {
-              const idx = ((y + ky) * canvas.width + (x + kx)) * 4;
-              sum += data[idx]; // usando canal R (cinza)
-            }
-          }
-          const avg = sum / (kernelSize * kernelSize);
-          const idx = (y * canvas.width + x) * 4;
-          data[idx] = data[idx + 1] = data[idx + 2] = avg;
-        }
-      }
-
-      const blackBoost = 1.5; // entre 1.2 e 2.0
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-        const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-
-        // reforça o preto
-        const boosted = 255 - (255 - gray) * blackBoost;
-        const v = boosted > threshold ? 255 : 0;
-
-        data[i] = data[i + 1] = data[i + 2] = v;
-      }
-
-      ctx.putImageData(imgData, 0, 0);
       this.preview = canvas.toDataURL('image/png');
       this.dialog = true;
     },
